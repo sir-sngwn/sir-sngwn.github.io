@@ -26,6 +26,11 @@ const SEARCH_INDEX = [
     url: "docs/tool-calling-mcp.html"
   },
   {
+    title: "C++ STL & 알고리즘 마스터리",
+    snippet: "모던 C++ 컨테이너(vector, map), 반복자, 시간 복잡도 및 실전 알고리즘 패턴",
+    url: "docs/cpp-mastery.html"
+  },
+  {
     title: "재활용 가능한 UI 컴포넌트",
     snippet: "콜아웃 알림창, 코드 블록, 탭, 스텝 가이드, 카드 및 뱃지 쇼케이스",
     url: "docs/reusable-components.html"

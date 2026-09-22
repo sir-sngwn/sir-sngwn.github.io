@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C++ 마스터리: STL부터 알고리즘까지 - AgentDocs</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header class="header">
+    <div class="header-left">
+      <button class="nav-action-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="메뉴 열기">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <a href="../index.html" class="brand-logo">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <span>AgentDocs</span>
+        <span class="brand-badge">C++ Guide</span>
+      </a>
+    </div>
+
+    <div class="header-center">
+      <button class="search-trigger" type="button" aria-label="문서 검색">
+        <div class="search-trigger-content">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span>C++ STL, 컨테이너, 알고리즘 검색...</span>
+        </div>
+        <kbd class="kbd-shortcut">⌘K</kbd>
+      </button>
+    </div>
+
+    <div class="header-right">
+      <button class="nav-action-btn" id="theme-toggle-btn" aria-label="테마 전환">
+        <span id="theme-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </span>
+      </button>
+      <a href="https://github.com/sir-sngwn/sir-sngwn.github.io" target="_blank" rel="noopener noreferrer" class="nav-action-btn" aria-label="GitHub 저장소">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="app-container">
+    <div class="sidebar-overlay"></div>
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">시작하기</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="../index.html" class="sidebar-nav-link">
+              <span>문서 홈</span>
+            </a>
+          </li>
+          <li>
+            <a href="agent-architecture.html" class="sidebar-nav-link">
+              <span>에이전트 아키텍처</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">언어 & 알고리즘 마스터리</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="cpp-mastery.html" class="sidebar-nav-link active">
+              <span>C++ STL & 알고리즘</span>
+              <span class="nav-tag">Hot</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">에이전트 엔지니어링</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="prompt-engineering.html" class="sidebar-nav-link">
+              <span>프롬프트 엔지니어링</span>
+            </a>
+          </li>
+          <li>
+            <a href="tool-calling-mcp.html" class="sidebar-nav-link">
+              <span>도구 호출 & MCP</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">UI 컴포넌트 킷</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="reusable-components.html" class="sidebar-nav-link">
+              <span>재활용 컴포넌트 쇼케이스</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <article class="article-wrapper">
+        
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs">
+          <a href="../index.html">홈</a>
+          <span>/</span>
+          <span>언어 & 알고리즘 마스터리</span>
+          <span>/</span>
+          <span>C++ STL & 알고리즘</span>
+        </nav>
+
+        <!-- Document Header -->
+        <header class="doc-header">
+          <h1 class="doc-title">C++ 마스터리: STL부터 알고리즘까지</h1>
+          <p class="doc-subtitle">모던 C++(C++17/20)을 기반으로 한 표준 템플릿 라이브러리(STL)의 핵심 컨테이너 구조, 반복자, 시간 복잡도 분석 및 실전 문제 해결을 위한 필수 알고리즘 종합 가이드입니다.</p>
+          <div class="doc-meta">
+            <div class="doc-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>읽는 시간: 약 8분</span>
+            </div>
+            <div class="doc-meta-item">
+              <span class="badge-agent badge-completed">
+                <span class="badge-dot"></span>
+                <span>Resolves: Issue #3</span>
+              </span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Document Body -->
+        <div class="content-body">
+          
+          <h2 id="stl-overview">1. C++ STL 개요 및 4대 구성 요소</h2>
+          <p>
+            <strong>표준 템플릿 라이브러리(Standard Template Library, STL)</strong>는 C++ 언어의 가장 강력한 무기 중 하나로, 데이터 구조와 알고리즘이 템플릿 기반으로 추상화되어 있어 높은 성능과 재사용성을 동시에 보장합니다.
+          </p>
+
+          <div class="card-grid">
+            <div class="card-item">
+              <div class="card-title">
+                <span>1. 컨테이너 (Containers)</span>
+              </div>
+              <div class="card-desc">
+                데이터를 저장하는 구조체 (시퀀스, 연관, 비순서, 어댑터). 동적 배열, 연결 리스트, 해시 테이블, 트리 등 구현체 제공.
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="card-title">
+                <span>2. 반복자 (Iterators)</span>
+              </div>
+              <div class="card-desc">
+                컨테이너 내부 원소를 순회할 수 있는 포인터의 일반화. 컨테이너와 알고리즘을 연결하는 접착제 역할.
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="card-title">
+                <span>3. 알고리즘 (Algorithms)</span>
+              </div>
+              <div class="card-desc">
+                정렬, 이분 탐색, 순열, 변형 등 100개 이상의 검증된 고성능 알고리즘 함수군 (`&lt;algorithm&gt;`).
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="card-title">
+                <span>4. 함수 객체 (Functors & Lambdas)</span>
+              </div>
+              <div class="card-desc">
+                사용자 정의 비교기, 필터링 조건 등을 람다 표현식 및 `std::function` 형태로 전달 가능.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-tip">
+            <div class="callout-header">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+              <span>성능 최적화 팁: 빠른 입출력 (Fast I/O)</span>
+            </div>
+            <div class="callout-content">
+              알고리즘 문제 풀이나 대용량 데이터 처리 시 <code>std::cin</code>, <code>std::cout</code>의 병목을 없애기 위해 <code>main()</code> 진입 시 아래 두 줄을 필수 설정하세요:
+              <pre style="margin-top: 0.5rem; background: #1e293b; padding: 0.5rem; border-radius: 4px; color: #f8fafc;"><code>std::ios::sync_with_stdio(false);
+std::cin.tie(nullptr);</code></pre>
+            </div>
+          </div>
+
+          <h2 id="sequence-containers">2. 시퀀스 컨테이너 (Sequence Containers)</h2>
+          <p>
+            원소가 삽입된 순서(Linear Order)를 유지하는 컨테이너입니다. 데이터 접근 및 삽입 위치에 따라 적절한 컨테이너를 선택해야 합니다.
+          </p>
+
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>컨테이너</th>
+                  <th>내부 구조</th>
+                  <th>임의 접근 (Random Access)</th>
+                  <th>앞쪽 삽입/삭제</th>
+                  <th>뒤쪽 삽입/삭제</th>
+                  <th>중간 삽입/삭제</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>std::vector</code></td>
+                  <td>연속된 동적 배열</td>
+                  <td><strong>$O(1)$</strong></td>
+                  <td>$O(N)$</td>
+                  <td><strong>$O(1)$ amortized</strong></td>
+                  <td>$O(N)$</td>
+                </tr>
+                <tr>
+                  <td><code>std::deque</code></td>
+                  <td>고정 크기 청크(Chunk) 배열</td>
+                  <td><strong>$O(1)$</strong></td>
+                  <td><strong>$O(1)$</strong></td>
+                  <td><strong>$O(1)$</strong></td>
+                  <td>$O(N)$</td>
+                </tr>
+                <tr>
+                  <td><code>std::list</code></td>
+                  <td>이중 연결 리스트</td>
+                  <td>$O(N)$</td>
+                  <td><strong>$O(1)$</strong></td>
+                  <td><strong>$O(1)$</strong></td>
+                  <td><strong>$O(1)$</strong> (위치 알고 있을 시)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tabs-container">
+            <div class="tabs-nav">
+              <button class="tab-button active" data-target="#tab-vector">1. std::vector</button>
+              <button class="tab-button" data-target="#tab-deque">2. std::deque</button>
+              <button class="tab-button" data-target="#tab-list">3. std::list</button>
+            </div>
+
+            <div class="tab-panel active" id="tab-vector">
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-title">vector_usage.cpp</span>
+                  <div class="code-actions">
+                    <span class="code-badge">C++20</span>
+                    <button class="btn-copy" type="button">복사</button>
+                  </div>
+                </div>
+                <pre class="code-pre"><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+int main() {
+    std::vector&lt;int&gt; v = {5, 2, 8, 1, 9};
+
+    // 메모리 재할당 방지를 위한 reserve 권장
+    v.reserve(10);
+
+    v.push_back(4);
+    v.emplace_back(7); // 객체 직접 생성(복사/이동 비용 절감)
+
+    // 범위 기반 for 문 (Modern C++)
+    for (const auto& elem : v) {
+        std::cout &lt;&lt; elem &lt;&lt; ' ';
+    }
+    std::cout &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-deque">
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-title">deque_usage.cpp</span>
+                  <div class="code-actions">
+                    <span class="code-badge">C++20</span>
+                    <button class="btn-copy" type="button">복사</button>
+                  </div>
+                </div>
+                <pre class="code-pre"><code>#include &lt;iostream&gt;
+#include &lt;deque&gt;
+
+int main() {
+    std::deque&lt;int&gt; dq;
+    // 양방향 끝에서 O(1) 삽입/삭제 가능
+    dq.push_front(10);
+    dq.push_back(20);
+    dq.push_front(5);
+
+    while (!dq.empty()) {
+        std::cout &lt;&lt; dq.front() &lt;&lt; ' ';
+        dq.pop_front();
+    }
+    return 0;
+}</code></pre>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-list">
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-title">list_usage.cpp</span>
+                  <div class="code-actions">
+                    <span class="code-badge">C++20</span>
+                    <button class="btn-copy" type="button">복사</button>
+                  </div>
+                </div>
+                <pre class="code-pre"><code>#include &lt;iostream&gt;
+#include &lt;list&gt;
+
+int main() {
+    std::list&lt;int&gt; lst = {1, 2, 3, 4};
+    auto it = std::next(lst.begin(), 2);
+    lst.insert(it, 99); // 중간 삽입 O(1)
+
+    for (int n : lst) std::cout &lt;&lt; n &lt;&lt; ' ';
+    return 0;
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-warning">
+            <div class="callout-header">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              <span>주의: 반복자 무효화 (Iterator Invalidation)</span>
+            </div>
+            <div class="callout-content">
+              <code>std::vector</code>의 <code>capacity</code>를 초과하여 원소를 삽입하면 전체 버퍼가 새 메모리로 복사되며 <strong>기존의 모든 포인터, 참조자, 반복자가 무효화(dangling)</strong>됩니다. 대량 삽입 전 반드시 <code>reserve()</code>를 사용하세요.
+            </div>
+          </div>
+
+          <h2 id="associative-containers">3. 연관 & 비순서 컨테이너 (Map & Set)</h2>
+          <p>
+            키(Key)를 기반으로 빠른 검색을 지원하는 컨테이너입니다. 정렬 순서가 필요하면 <strong>레드-블랙 트리 기반</strong>을, 최상의 평균 속도가 필요하면 <strong>해시 테이블 기반</strong>을 선택합니다.
+          </p>
+
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>구분</th>
+                  <th>컨테이너</th>
+                  <th>내부 구현</th>
+                  <th>시간 복잡도 (탐색/삽입/삭제)</th>
+                  <th>키의 정렬 여부</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>연관 (Ordered)</strong></td>
+                  <td><code>std::set</code>, <code>std::map</code></td>
+                  <td>Red-Black Tree (균형 이진 탐색 트리)</td>
+                  <td><strong>$O(\log N)$</strong> (항상 보장)</td>
+                  <td>오름차순 자동 정렬</td>
+                </tr>
+                <tr>
+                  <td><strong>비순서 (Unordered)</strong></td>
+                  <td><code>std::unordered_set</code>, <code>std::unordered_map</code></td>
+                  <td>Hash Table (해시 버킷)</td>
+                  <td><strong>$O(1)$ avg</strong> / $O(N)$ worst</td>
+                  <td>순서 없음 (무작위)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">map_vs_unordered_map.cpp</span>
+              <div class="code-actions">
+                <span class="code-badge">C++20</span>
+                <button class="btn-copy" type="button">복사</button>
+              </div>
+            </div>
+            <pre class="code-pre"><code>#include &lt;iostream&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;string&gt;
+
+int main() {
+    // 1. std::map: 키 기준 자동 정렬 유지 (O(log N))
+    std::map&lt;std::string, int&gt; scoreMap;
+    scoreMap["Charlie"] = 85;
+    scoreMap["Alice"] = 95;
+    scoreMap["Bob"] = 90;
+
+    std::cout &lt;&lt; "--- std::map (정렬 순 출력) ---\n";
+    for (const auto& [name, score] : scoreMap) {
+        std::cout &lt;&lt; name &lt;&lt; ": " &lt;&lt; score &lt;&lt; '\n';
+    }
+
+    // 2. std::unordered_map: 해시 기반 최고 속도 (평균 O(1))
+    std::unordered_map&lt;std::string, int&gt; fastCache;
+    fastCache["token_alpha"] = 1001;
+
+    // 안전한 탐색: find() 활용
+    if (auto it = fastCache.find("token_alpha"); it != fastCache.end()) {
+        std::cout &lt;&lt; "Found: " &lt;&lt; it-&gt;second &lt;&lt; '\n';
+    }
+    return 0;
+}</code></pre>
+          </div>
+
+          <h2 id="algorithms">4. STL 알고리즘 핵심 활용 (&lt;algorithm&gt;)</h2>
+          <p>
+            C++ 표준 알고리즘은 반복자를 통해 컨테이너와 독립적으로 동작하며, 최적화된 어셈블리로 컴파일됩니다.
+          </p>
+
+          <div class="steps-container">
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">정렬 및 사용자 정의 비교기 (std::sort)</div>
+                <div class="step-description">
+                  평균 $O(N \log N)$ 인트로소트(Introsort)를 사용합니다. 모던 C++에서는 람다 표현식으로 커스텀 정렬 기준을 깔끔하게 정의할 수 있습니다.
+                </div>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">이분 탐색 (std::lower_bound / std::upper_bound)</div>
+                <div class="step-description">
+                  <strong>반드시 정렬된 상태</strong>에서 동작하며, $O(\log N)$ 만에 특정 값 이상/초과의 첫 원소 위치를 찾습니다.
+                </div>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">모던 C++20 Ranges (std::ranges)</div>
+                <div class="step-description">
+                  반복자 쌍(`v.begin(), v.end()`) 대신 컨테이너 자체를 전달할 수 있고, 파이프라인 연산자(`|`)를 통한 함수형 스타일 체이닝을 지원합니다.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-title">algorithms_demo.cpp</span>
+              <div class="code-actions">
+                <span class="code-badge">C++20</span>
+                <button class="btn-copy" type="button">복사</button>
+              </div>
+            </div>
+            <pre class="code-pre"><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;numeric&gt;
+
+struct Student {
+    std::string name;
+    int score;
+};
+
+int main() {
+    std::vector&lt;Student&gt; students = {
+        {"Kim", 88}, {"Lee", 95}, {"Park", 95}, {"Choi", 70}
+    };
+
+    // 1. 람다 기반 다중 조건 정렬 (점수 내림차순 -> 이름 오름차순)
+    std::sort(students.begin(), students.end(), [](const Student& a, const Student& b) {
+        if (a.score != b.score) return a.score &gt; b.score;
+        return a.name &lt; b.name;
+    });
+
+    // 2. 이분 탐색으로 특정 구간 카운팅 (std::vector&lt;int&gt;)
+    std::vector&lt;int&gt; nums = {1, 2, 4, 4, 4, 6, 7};
+    auto low = std::lower_bound(nums.begin(), nums.end(), 4); // 첫 번째 4의 반복자
+    auto up  = std::upper_bound(nums.begin(), nums.end(), 4); // 4를 초과하는 첫 반복자
+    std::cout &lt;&lt; "4의 개수: " &lt;&lt; std::distance(low, up) &lt;&lt; '\n'; // 3
+
+    // 3. std::accumulate를 활용한 총합 계산
+    int total = std::accumulate(nums.begin(), nums.end(), 0);
+    std::cout &lt;&lt; "총합: " &lt;&lt; total &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+          </div>
+
+          <h2 id="practical-patterns">5. 실전 알고리즘 패턴 모음</h2>
+          <p>
+            코딩 인터뷰 및 알고리즘 대회에서 빈출되는 3대 핵심 패턴과 C++ 관용구입니다:
+          </p>
+
+          <div class="accordion-group">
+            <details class="accordion-item" open>
+              <summary class="accordion-summary">
+                <span>패턴 1: 투 포인터 & 슬라이딩 윈도우 (Two Pointers)</span>
+                <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </summary>
+              <div class="accordion-body">
+                연속된 구간의 합이나 조건을 만족하는 부분 배열을 구할 때 $O(N^2)$을 <strong>$O(N)$</strong>으로 단축합니다.
+                <pre style="margin-top:0.5rem; background: #0f172a; padding: 0.75rem; border-radius: 6px; color:#e2e8f0;"><code>int left = 0, sum = 0, minLen = INT_MAX;
+for (int right = 0; right &lt; n; ++right) {
+    sum += arr[right];
+    while (sum &gt;= target) {
+        minLen = std::min(minLen, right - left + 1);
+        sum -= arr[left++];
+    }
+}</code></pre>
+              </div>
+            </details>
+
+            <details class="accordion-item">
+              <summary class="accordion-summary">
+                <span>패턴 2: BFS/DFS 그래프 탐색 (std::queue & recursion)</span>
+                <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </summary>
+              <div class="accordion-body">
+                최단 거리는 <code>std::queue</code> 기반 BFS, 백트래킹 및 모든 경로 탐색은 DFS 재귀를 활용합니다. <code>std::vector&lt;std::vector&lt;int&gt;&gt;</code> 인접 리스트 구조를 기본으로 사용합니다.
+              </div>
+            </details>
+
+            <details class="accordion-item">
+              <summary class="accordion-summary">
+                <span>패턴 3: 다이나믹 프로그래밍 (DP: Tabulation & Memoization)</span>
+                <svg class="accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </summary>
+              <div class="accordion-body">
+                중복 부분 문제와 최적 부분 구조를 갖는 문제를 점화식으로 환원하여 해결합니다. <code>std::vector&lt;int&gt; dp(N + 1, -1);</code> 메모이제이션을 적용합니다.
+              </div>
+            </details>
+          </div>
+
+        </div>
+
+        <!-- Page Navigation Footer -->
+        <footer class="page-nav-footer">
+          <a href="agent-architecture.html" class="page-nav-card">
+            <span class="page-nav-label">이전 문서</span>
+            <span class="page-nav-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>에이전트 아키텍처</span>
+            </span>
+          </a>
+          <a href="prompt-engineering.html" class="page-nav-card next">
+            <span class="page-nav-label">다음 문서</span>
+            <span class="page-nav-title">
+              <span>프롬프트 엔지니어링</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </a>
+        </footer>
+
+      </article>
+    </main>
+
+    <!-- Table of Contents (Right) -->
+    <aside class="toc-sidebar">
+      <div class="toc-title">이 페이지의 목차</div>
+      <ul class="toc-list">
+        <li><a href="#stl-overview" class="toc-link">1. C++ STL 개요</a></li>
+        <li><a href="#sequence-containers" class="toc-link">2. 시퀀스 컨테이너 비교</a></li>
+        <li><a href="#associative-containers" class="toc-link">3. 연관 & 비순서 컨테이너</a></li>
+        <li><a href="#algorithms" class="toc-link">4. STL 핵심 알고리즘</a></li>
+        <li><a href="#practical-patterns" class="toc-link">5. 실전 알고리즘 패턴</a></li>
+      </ul>
+    </aside>
+
+  </div>
+
+  <!-- Search Modal -->
+  <div class="search-modal-backdrop" id="search-modal-backdrop">
+    <div class="search-modal">
+      <div class="search-input-wrapper">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" class="search-modal-input" id="search-modal-input" placeholder="문서 검색..." autocomplete="off">
+        <kbd class="kbd-shortcut">ESC</kbd>
+      </div>
+      <ul class="search-results-list" id="search-results-list"></ul>
+      <div class="search-modal-footer">
+        <span><kbd class="kbd-shortcut">↵</kbd> 선택</span>
+        <span><kbd class="kbd-shortcut">ESC</kbd> 닫기</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>
