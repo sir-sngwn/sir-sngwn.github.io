@@ -1,0 +1,536 @@
+/* ==========================================================================
+   Reusable Documentation Components
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Callout / Alert Boxes
+   -------------------------------------------------------------------------- */
+.callout {
+  position: relative;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  border-left: 4px solid transparent;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.callout-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.callout-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.callout-content {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.callout-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Callout Variants */
+.callout-note {
+  border-left-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.07);
+}
+.callout-note .callout-header {
+  color: #2563eb;
+}
+
+.callout-tip {
+  border-left-color: #10b981;
+  background: rgba(16, 185, 129, 0.07);
+}
+.callout-tip .callout-header {
+  color: #059669;
+}
+
+.callout-important {
+  border-left-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.08);
+}
+.callout-important .callout-header {
+  color: #7c3aed;
+}
+
+.callout-warning {
+  border-left-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.08);
+}
+.callout-warning .callout-header {
+  color: #d97706;
+}
+
+.callout-caution {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+.callout-caution .callout-header {
+  color: #dc2626;
+}
+
+/* --------------------------------------------------------------------------
+   2. Enhanced Code Block with Header & Copy Button
+   -------------------------------------------------------------------------- */
+.code-block {
+  margin: 1.5rem 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: #0f172a;
+  color: #e2e8f0;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.code-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+.code-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  background: #334155;
+  color: #cbd5e1;
+  border-radius: 4px;
+}
+
+.code-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 3px 8px;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background: transparent;
+  border: 1px solid #475569;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-copy:hover {
+  background: #334155;
+  color: #f8fafc;
+  border-color: #64748b;
+}
+
+.btn-copy.copied {
+  color: #34d399;
+  border-color: #059669;
+  background: rgba(16, 185, 129, 0.15);
+}
+
+.code-pre {
+  margin: 0;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   3. Interactive Tabs Component
+   -------------------------------------------------------------------------- */
+.tabs-container {
+  margin: 1.5rem 0;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.tabs-nav {
+  display: flex;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-default);
+  padding: 0.35rem 0.5rem 0;
+  gap: 0.25rem;
+  overflow-x: auto;
+}
+
+.tab-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-top-left-radius: var(--radius-sm);
+  border-top-right-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-button:hover {
+  color: var(--text-primary);
+}
+
+.tab-button.active {
+  color: var(--primary);
+  background: var(--bg-surface);
+  font-weight: 600;
+  border-bottom: 2px solid var(--primary);
+}
+
+.tab-panel {
+  display: none;
+  padding: 1.25rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.tabs-container .code-block {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   4. Step-by-Step Execution Guide / Timeline
+   -------------------------------------------------------------------------- */
+.steps-container {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.step-item {
+  display: flex;
+  gap: 1.25rem;
+  position: relative;
+}
+
+.step-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 36px;
+  left: 17px;
+  bottom: -24px;
+  width: 2px;
+  background: var(--border-default);
+}
+
+.step-number {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background: var(--primary-subtle);
+  color: var(--primary);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  border: 2px solid var(--primary-border);
+  box-shadow: var(--shadow-sm);
+  z-index: 1;
+}
+
+.step-content {
+  flex: 1;
+  padding-top: 0.25rem;
+}
+
+.step-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.step-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* --------------------------------------------------------------------------
+   5. Card Grids & Feature Cards
+   -------------------------------------------------------------------------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin: 1.75rem 0;
+}
+
+.card-item {
+  padding: 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-item:hover {
+  border-color: var(--border-focus);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: var(--primary-subtle);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.card-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.card-footer-link {
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* --------------------------------------------------------------------------
+   6. Collapsible Details / Accordion
+   -------------------------------------------------------------------------- */
+.accordion-group {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.accordion-item {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+
+.accordion-item[open] {
+  border-color: var(--border-focus);
+}
+
+.accordion-summary {
+  padding: 0.9rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  background: var(--bg-surface);
+  list-style: none;
+  transition: background var(--transition-fast);
+}
+
+.accordion-summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion-summary:hover {
+  background: var(--bg-subtle);
+}
+
+.accordion-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform var(--transition-normal);
+  color: var(--text-muted);
+}
+
+.accordion-item[open] .accordion-arrow {
+  transform: rotate(180deg);
+  color: var(--primary);
+}
+
+.accordion-body {
+  padding: 1rem 1.25rem 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-subtle);
+}
+
+/* --------------------------------------------------------------------------
+   7. Agent Status Badges
+   -------------------------------------------------------------------------- */
+.badge-agent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.02em;
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  position: relative;
+}
+
+/* Status: Ready */
+.badge-ready {
+  background: rgba(59, 130, 246, 0.12);
+  color: #2563eb;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+.badge-ready .badge-dot {
+  background: #3b82f6;
+}
+
+/* Status: Running (Pulsing animation) */
+.badge-running {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+.badge-running .badge-dot {
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulseDot 1.8s infinite;
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* Status: Completed */
+.badge-completed {
+  background: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+.badge-completed .badge-dot {
+  background: #6366f1;
+}
+
+/* Status: Blocked */
+.badge-blocked {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+.badge-blocked .badge-dot {
+  background: #ef4444;
+}
+
+/* --------------------------------------------------------------------------
+   8. Copyable Prompt Box
+   -------------------------------------------------------------------------- */
+.prompt-box {
+  margin: 1.5rem 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.prompt-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-default);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.prompt-box-content {
+  padding: 1rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  background: var(--bg-surface);
+}
