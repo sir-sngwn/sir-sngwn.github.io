@@ -1,0 +1,138 @@
+name: Gemini Issue Assistant
+
+on:
+  issues:
+    types: [opened, edited]
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  analyze-issue:
+    runs-on: ubuntu-latest
+    # 1. github-actions[bot] 및 외부 봇 계정의 재실행 방지 (무한 루프 차단)
+    # 2. 이슈 생성/수정이거나, 댓글에 '/gemini' 트리거 명령어가 포함된 경우에만 실행
+    if: |
+      !endsWith(github.actor, '[bot]') &&
+      github.actor != 'github-actions[bot]' &&
+      (
+        github.event_name == 'issues' ||
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/gemini'))
+      )
+    steps:
+      - name: Analyze with Gemini and Comment
+        uses: actions/github-script@v7
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const apiKey = process.env.GEMINI_API_KEY;
+            if (!apiKey) {
+              core.setFailed("GEMINI_API_KEY Secret이 설정되지 않았습니다. 저장소 Settings > Secrets and variables > Actions에 등록해주세요.");
+              return;
+            }
+
+            const isComment = context.eventName === 'issue_comment';
+            const issue = context.payload.issue;
+            const issueNumber = issue.number;
+            const issueTitle = issue.title;
+            const issueBody = issue.body || "(내용 없음)";
+            const issueAuthor = issue.user.login;
+            const actor = context.actor;
+
+            // 추가 코멘트 트리거인 경우 해당 댓글 내용 추출
+            const commentBody = isComment ? (context.payload.comment.body || '') : '';
+
+            // 시니어 오픈소스 메인테이너 시스템 프롬프트 정의
+            const systemPrompt = `너는 이 저장소의 시니어 오픈소스 메인테이너이자 AI 어시스턴트다. 
+사용자가 등록하거나 문의한 이슈의 제목과 본문(버그 리포트, 기능 제안, 장애 문의 등)을 분석하여:
+1. 핵심 문제 원인 추론 (Analysis)
+2. 추천 해결 방안 및 코드 수정 힌트 (Solution & Code Hints)
+3. 재현 및 디버깅 체크리스트 (Debugging Checklist)
+를 친절하고 명확한 마크다운 형식의 한국어로 구조화하여 작성하라.`;
+
+            // 사용자 입력 프롬프트 조립
+            let promptContent = `[이슈 정보]
+- 작성자: @${issueAuthor}
+- 이슈 번호: #${issueNumber}
+- 제목: ${issueTitle}
+
+[이슈 본문]
+${issueBody}
+`;
+
+            if (isComment) {
+              promptContent += `\n[사용자 추가 댓글 (/gemini 트리거)]
+@${actor}님의 댓글:
+${commentBody}
+
+위 추가 문의 사항에 집중하여 필요한 가이드와 구체적인 조언을 제공해주세요.`;
+            }
+
+            const requestPayload = {
+              systemInstruction: {
+                parts: [{ text: systemPrompt }]
+              },
+              contents: [
+                {
+                  role: "user",
+                  parts: [{ text: promptContent }]
+                }
+              ],
+              generationConfig: {
+                temperature: 0.3,
+                topP: 0.95,
+                maxOutputTokens: 2048
+              }
+            };
+
+            core.info(`Google Gemini API (gemini-1.5-flash) 호출 중... (이슈 #${issueNumber})`);
+
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+            const response = await fetch(endpoint, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(requestPayload)
+            });
+
+            if (!response.ok) {
+              const errorText = await response.text();
+              throw new Error(`Gemini API 호출 실패 (HTTP ${response.status}): ${errorText}`);
+            }
+
+            const result = await response.json();
+            const aiReply = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+            if (!aiReply) {
+              throw new Error("Gemini API로부터 적절한 텍스트 응답을 수신하지 못했습니다.");
+            }
+
+            // 최종 마크다운 댓글 조립
+            const formattedComment = [
+              `🤖 **Gemini AI Issue Assistant**`,
+              ``,
+              `안녕하세요 @${actor}님! 등록해주신 이슈 #${issueNumber}를 분석한 결과입니다.`,
+              ``,
+              `---`,
+              ``,
+              aiReply,
+              ``,
+              `---`,
+              `*💡 이 답변은 Google Gemini API(\`gemini-1.5-flash\`)에 의해 자동 생성되었습니다. 추가 분석이나 도움이 필요하시면 \`/gemini <문의 내용>\` 형태로 댓글을 남겨주세요.*`
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: formattedComment
+            });
+
+            core.info(`이슈 #${issueNumber}에 Gemini 분석 댓글 등록 완료!`);
