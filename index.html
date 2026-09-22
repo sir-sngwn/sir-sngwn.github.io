@@ -1,11 +1,400 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>내 웹사이트</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgentDocs - AI 에이전트 개발 & 엔지니어링 문서</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
-  <h1>안녕하세요! 제 사이트에 오신 것을 환영합니다.</h1>
-  <p>GitHub Pages로 운영 중인 웹사이트입니다.</p>
+
+  <!-- Top Header Navigation -->
+  <header class="header">
+    <div class="header-left">
+      <button class="nav-action-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="메뉴 열기">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <span>AgentDocs</span>
+        <span class="brand-badge">v2.0</span>
+      </a>
+    </div>
+
+    <div class="header-center">
+      <button class="search-trigger" type="button" aria-label="문서 검색">
+        <div class="search-trigger-content">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span>문서 및 컴포넌트 검색...</span>
+        </div>
+        <kbd class="kbd-shortcut">⌘K</kbd>
+      </button>
+    </div>
+
+    <div class="header-right">
+      <button class="nav-action-btn" id="theme-toggle-btn" aria-label="테마 전환">
+        <span id="theme-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </span>
+      </button>
+      <a href="https://github.com/sir-sngwn/sir-sngwn.github.io" target="_blank" rel="noopener noreferrer" class="nav-action-btn" aria-label="GitHub 저장소">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="app-container">
+    
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">시작하기</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="index.html" class="sidebar-nav-link active">
+              <span>문서 홈</span>
+              <span class="nav-tag">Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="docs/agent-architecture.html" class="sidebar-nav-link">
+              <span>에이전트 아키텍처</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">에이전트 엔지니어링</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="docs/prompt-engineering.html" class="sidebar-nav-link">
+              <span>프롬프트 엔지니어링</span>
+            </a>
+          </li>
+          <li>
+            <a href="docs/tool-calling-mcp.html" class="sidebar-nav-link">
+              <span>도구 호출 & MCP</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">UI 컴포넌트 킷</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="docs/reusable-components.html" class="sidebar-nav-link">
+              <span>재활용 컴포넌트 쇼케이스</span>
+              <span class="nav-tag">New</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <article class="article-wrapper">
+        
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs">
+          <a href="index.html">홈</a>
+          <span>/</span>
+          <span>소개 & 빠른 시작</span>
+        </nav>
+
+        <!-- Document Header -->
+        <header class="doc-header">
+          <h1 class="doc-title">AI 에이전트 문서 포털</h1>
+          <p class="doc-subtitle">차세대 자율 에이전트(Autonomous Agent) 아키텍처 설계, 도구 통합, 프롬프트 엔지니어링 및 재활용 컴포넌트 라이브러리 가이드입니다.</p>
+          <div class="doc-meta">
+            <div class="doc-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>읽는 시간: 약 3분</span>
+            </div>
+            <div class="doc-meta-item">
+              <span class="badge-agent badge-running">
+                <span class="badge-dot"></span>
+                <span>Agent Loop: Active</span>
+              </span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Document Body -->
+        <div class="content-body">
+          
+          <h2 id="overview">포털 개요</h2>
+          <p>
+            본 문서는 복잡한 문제를 스스로 계획(Plan), 도구 실행(Act), 결과 관찰(Observe)하며 해결하는 최신 <strong>AI 에이전트 시스템</strong>의 설계 지침과 실전 구현 패턴을 제공합니다.
+            또한, 기술 문서를 미려하고 일관되게 작성할 수 있도록 <strong>재활용 가능한 UI 컴포넌트 세트</strong>를 함께 내장하고 있습니다.
+          </p>
+
+          <div class="callout callout-tip">
+            <div class="callout-header">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+              </svg>
+              <span>즉각적인 재활용성</span>
+            </div>
+            <div class="callout-content">
+              문서 내 모든 콜아웃, 코드 블록(복사 기능 포함), 탭, 스텝 가이드 및 카드 컴포넌트는 순수 CSS와 경량 JS로 제작되어 외부 라이브러리 없이 모든 페이지에 바로 복사하여 사용할 수 있습니다.
+            </div>
+          </div>
+
+          <h2 id="key-topics">주요 문서 바로가기</h2>
+          <p>필요한 분야의 가이드를 선택하여 탐색하세요:</p>
+
+          <div class="card-grid">
+            <a href="docs/agent-architecture.html" class="card-item">
+              <div class="card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+              </div>
+              <div class="card-title">
+                <span>에이전트 아키텍처</span>
+              </div>
+              <div class="card-desc">
+                Percept-Reason-Act 루프, 장/단기 메모리 계층 및 단일/멀티 에이전트 오케스트레이션 원리.
+              </div>
+              <div class="card-footer-link">
+                <span>문서 보기 &rarr;</span>
+              </div>
+            </a>
+
+            <a href="docs/prompt-engineering.html" class="card-item">
+              <div class="card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <div class="card-title">
+                <span>프롬프트 엔지니어링</span>
+              </div>
+              <div class="card-desc">
+                시스템 프롬프트 구성, XML 태그 구조화 기법 및 환각 방지를 위한 제약 조건 설계.
+              </div>
+              <div class="card-footer-link">
+                <span>문서 보기 &rarr;</span>
+              </div>
+            </a>
+
+            <a href="docs/tool-calling-mcp.html" class="card-item">
+              <div class="card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                </svg>
+              </div>
+              <div class="card-title">
+                <span>도구 호출 & MCP</span>
+              </div>
+              <div class="card-desc">
+                JSON Schema 기반의 도구 정의, Model Context Protocol 표준 및 안전한 샌드박스 실행.
+              </div>
+              <div class="card-footer-link">
+                <span>문서 보기 &rarr;</span>
+              </div>
+            </a>
+
+            <a href="docs/reusable-components.html" class="card-item">
+              <div class="card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+              </div>
+              <div class="card-title">
+                <span>컴포넌트 쇼케이스</span>
+              </div>
+              <div class="card-desc">
+                문서 작성에 필요한 콜아웃, 코드 탭, 스텝 가이드, 뱃지 등 즉시 복사 가능한 UI 모음.
+              </div>
+              <div class="card-footer-link">
+                <span>컴포넌트 확인 &rarr;</span>
+              </div>
+            </a>
+          </div>
+
+          <h2 id="quickstart">에이전트 시스템 시작하기 (3단계)</h2>
+          <p>새로운 AI 에이전트를 구축할 때 권장하는 표준 워크플로우입니다:</p>
+
+          <div class="steps-container">
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">역할 및 제약조건 정의 (Role & Scope)</div>
+                <div class="step-description">
+                  에이전트가 수행할 작업의 경계와 도구 권한(읽기 전용, 샌드박스 실행, 쓰기 권한)을 명확하게 정의합니다.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">도구 스키마 및 환경 연동 (Tool Registration)</div>
+                <div class="step-description">
+                  MCP(Model Context Protocol) 또는 OpenAI/Gemini Function Calling 규격에 맞춰 입력 파라미터와 반환 스키마를 선언합니다.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">추론 루프 및 검증 체계 가동 (Reason-Act Loop)</div>
+                <div class="step-description">
+                  에이전트가 생성한 중간 추론 과정(Thought)을 검증하고, 도구 실행 실패 시 자가 수정(Self-Correction) 메커니즘을 작동시킵니다.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h2 id="example-code">에이전트 기본 실행 예제</h2>
+          <p>간단한 에이전트 추론 루프의 기본 구조입니다:</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <span>agent_loop.py</span>
+              </div>
+              <div class="code-actions">
+                <span class="code-badge">Python</span>
+                <button class="btn-copy" type="button">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span>복사</span>
+                </button>
+              </div>
+            </div>
+            <pre class="code-pre"><code>class AutonomousAgent:
+    def __init__(self, model, tools):
+        self.model = model
+        self.tools = {t.name: t for t in tools}
+        self.memory = []
+
+    def run(self, user_goal: str):
+        self.memory.append({"role": "user", "content": user_goal})
+        
+        while True:
+            # 1. Thought & Decision
+            response = self.model.generate(self.memory, tools=self.tools)
+            
+            # 2. Check Termination
+            if not response.tool_calls:
+                return response.content
+
+            # 3. Tool Execution & Observation
+            for call in response.tool_calls:
+                result = self.tools[call.name].execute(**call.args)
+                self.memory.append({"role": "tool", "content": result})</code></pre>
+          </div>
+
+          <div class="callout callout-important">
+            <div class="callout-header">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>안전한 샌드박스 실행 원칙</span>
+            </div>
+            <div class="callout-content">
+              파일 시스템 변경이나 외부 네트워크 통신을 수반하는 도구는 반드시 격리된 샌드박스(Container/Sandbox) 내에서 실행되어야 하며, 파괴적인 작업 전에는 사용자 승인 절차를 거쳐야 합니다.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Page Navigation Footer -->
+        <footer class="page-nav-footer">
+          <div></div>
+          <a href="docs/agent-architecture.html" class="page-nav-card next">
+            <span class="page-nav-label">다음 문서</span>
+            <span class="page-nav-title">
+              <span>에이전트 아키텍처</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </a>
+        </footer>
+
+      </article>
+    </main>
+
+    <!-- Table of Contents (Right) -->
+    <aside class="toc-sidebar">
+      <div class="toc-title">이 페이지의 목차</div>
+      <ul class="toc-list">
+        <li><a href="#overview" class="toc-link">포털 개요</a></li>
+        <li><a href="#key-topics" class="toc-link">주요 문서 바로가기</a></li>
+        <li><a href="#quickstart" class="toc-link">에이전트 시작하기 (3단계)</a></li>
+        <li><a href="#example-code" class="toc-link">에이전트 기본 실행 예제</a></li>
+      </ul>
+    </aside>
+
+  </div>
+
+  <!-- Search Modal -->
+  <div class="search-modal-backdrop" id="search-modal-backdrop">
+    <div class="search-modal">
+      <div class="search-input-wrapper">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" class="search-modal-input" id="search-modal-input" placeholder="문서 검색 (예: 프롬프트, 컴포넌트, 아키텍처...)" autocomplete="off">
+        <kbd class="kbd-shortcut">ESC</kbd>
+      </div>
+      <ul class="search-results-list" id="search-results-list"></ul>
+      <div class="search-modal-footer">
+        <span><kbd class="kbd-shortcut">↵</kbd> 선택</span>
+        <span><kbd class="kbd-shortcut">ESC</kbd> 닫기</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

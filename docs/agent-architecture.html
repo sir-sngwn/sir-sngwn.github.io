@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>에이전트 아키텍처 - AgentDocs</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header class="header">
+    <div class="header-left">
+      <button class="nav-action-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="메뉴 열기">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <a href="../index.html" class="brand-logo">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <span>AgentDocs</span>
+        <span class="brand-badge">v2.0</span>
+      </a>
+    </div>
+
+    <div class="header-center">
+      <button class="search-trigger" type="button" aria-label="문서 검색">
+        <div class="search-trigger-content">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span>문서 및 컴포넌트 검색...</span>
+        </div>
+        <kbd class="kbd-shortcut">⌘K</kbd>
+      </button>
+    </div>
+
+    <div class="header-right">
+      <button class="nav-action-btn" id="theme-toggle-btn" aria-label="테마 전환">
+        <span id="theme-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </span>
+      </button>
+      <a href="https://github.com/sir-sngwn/sir-sngwn.github.io" target="_blank" rel="noopener noreferrer" class="nav-action-btn" aria-label="GitHub 저장소">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="app-container">
+    <div class="sidebar-overlay"></div>
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">시작하기</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="../index.html" class="sidebar-nav-link">
+              <span>문서 홈</span>
+            </a>
+          </li>
+          <li>
+            <a href="agent-architecture.html" class="sidebar-nav-link active">
+              <span>에이전트 아키텍처</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">에이전트 엔지니어링</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="prompt-engineering.html" class="sidebar-nav-link">
+              <span>프롬프트 엔지니어링</span>
+            </a>
+          </li>
+          <li>
+            <a href="tool-calling-mcp.html" class="sidebar-nav-link">
+              <span>도구 호출 & MCP</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">UI 컴포넌트 킷</div>
+        <ul class="sidebar-nav-list">
+          <li>
+            <a href="reusable-components.html" class="sidebar-nav-link">
+              <span>재활용 컴포넌트 쇼케이스</span>
+              <span class="nav-tag">New</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <article class="article-wrapper">
+        
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs">
+          <a href="../index.html">홈</a>
+          <span>/</span>
+          <span>시작하기</span>
+          <span>/</span>
+          <span>에이전트 아키텍처</span>
+        </nav>
+
+        <!-- Document Header -->
+        <header class="doc-header">
+          <h1 class="doc-title">AI 에이전트 아키텍처</h1>
+          <p class="doc-subtitle">자율 에이전트 시스템을 구성하는 핵심 추론 루프(Percept-Reason-Act), 계층형 메모리 구조, 그리고 멀티 에이전트 조율 패턴에 대한 심층 기술 문서입니다.</p>
+          <div class="doc-meta">
+            <div class="doc-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>읽는 시간: 약 5분</span>
+            </div>
+            <div class="doc-meta-item">
+              <span class="badge-agent badge-ready">
+                <span class="badge-dot"></span>
+                <span>System: Architecture</span>
+              </span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Document Body -->
+        <div class="content-body">
+          
+          <h2 id="core-loop">1. 핵심 실행 루프 (Percept-Reason-Act)</h2>
+          <p>
+            AI 에이전트는 단순한 단발성 텍스트 완성을 넘어, 목표가 달성될 때까지 환경과 능동적으로 상호작용하는 유한 상태 머신(Finite State Machine)의 특성을 갖습니다.
+          </p>
+
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>단계 (Phase)</th>
+                  <th>역할 및 동작</th>
+                  <th>주요 산출물</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Perception (인식)</strong></td>
+                  <td>사용자 입력, 파일 시스템 상태, 도구 실행 결과, 터미널 로그 수신</td>
+                  <td>원시 데이터 정규화 & 컨텍스트 버퍼 적재</td>
+                </tr>
+                <tr>
+                  <td><strong>Reasoning (추론/계획)</strong></td>
+                  <td>현재 상태와 최종 목표 간의 차이를 비교하고 다음 최적 행동 결정</td>
+                  <td>사고 과정(Chain-of-Thought) 및 도구 호출 파라미터</td>
+                </tr>
+                <tr>
+                  <td><strong>Action (실행)</strong></td>
+                  <td>API 호출, 셸 명령어 실행, 파일 생성/수정 등 환경에 영향 행사</td>
+                  <td>Tool Call 실행 및 종료 코드</td>
+                </tr>
+                <tr>
+                  <td><strong>Observation (관찰 & 평가)</strong></td>
+                  <td>실행 결과의 오류 여부 분석 및 오류 시 자체 복구(Self-Correction) 전략 수립</td>
+                  <td>다음 턴의 인식 입력으로 피드백</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout callout-note">
+            <div class="callout-header">
+              <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span>루프 종료 조건 (Termination Criteria)</span>
+            </div>
+            <div class="callout-content">
+              무한 루프 방지를 위해 <strong>(1) 최대 턴 수 제한(Max Turns)</strong>, <strong>(2) 목표 달성 검증 신호(Done Signal)</strong>, <strong>(3) 예산/토큰 한도(Token Budget)</strong>를 항상 설정해야 합니다.
+            </div>
+          </div>
+
+          <h2 id="memory-layers">2. 에이전트 메모리 계층 구조</h2>
+          <p>
+            대용량 컨텍스트 윈도우를 효율적으로 활용하기 위해 메모리를 3가지 계층으로 분리하여 관리합니다:
+          </p>
+
+          <div class="card-grid">
+            <div class="card-item">
+              <div class="card-title">
+                <span class="badge-agent badge-running"><span class="badge-dot"></span></span>
+                <span>단기 작업 기억 (Working Memory)</span>
+              </div>
+              <div class="card-desc">
+                현재 대화 세션의 직전 대화 기록 및 활성 상태의 Tool Result 목록입니다. 실시간 추론 시 슬라이딩 윈도우 방식으로 유지됩니다.
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="card-title">
+                <span class="badge-agent badge-completed"><span class="badge-dot"></span></span>
+                <span>스크래치패드 & 아티팩트 (Scratchpad)</span>
+              </div>
+              <div class="card-desc">
+                단계별 계획서, 가상 파일 버퍼, 중간 계산 결과 등을 보관하는 지속 가능한 아티팩트 영역입니다. 대화 토큰을 절약합니다.
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="card-title">
+                <span class="badge-agent badge-ready"><span class="badge-dot"></span></span>
+                <span>장기 지식 메모리 (Vector Store / RAG)</span>
+              </div>
+              <div class="card-desc">
+                과거 해결 이력, 코드베이스 전체 인덱스, 대규모 레퍼런스 문서를 임베딩 기반 검색(Similarity Search)으로 추출합니다.
+              </div>
+            </div>
+          </div>
+
+          <h2 id="multi-agent-patterns">3. 다중 에이전트 (Multi-Agent) 조율 패턴</h2>
+          <p>
+            복잡한 대규모 엔지니어링 문제를 해결할 때 단일 에이전트보다 전문화된 하위 에이전트(Subagents) 팀을 구성하는 것이 효율적입니다:
+          </p>
+
+          <div class="tabs-container">
+            <div class="tabs-nav">
+              <button class="tab-button active" data-target="#tab-orchestrator">Orchestrator-Worker</button>
+              <button class="tab-button" data-target="#tab-reflection">Generator-Critic (반성 모델)</button>
+              <button class="tab-button" data-target="#tab-pipeline">순차 파이프라인 (Pipeline)</button>
+            </div>
+            
+            <div class="tab-panel active" id="tab-orchestrator">
+              <p><strong>오케스트레이터 패턴:</strong> 메인 관리자 에이전트가 전체 목표를 세부 작업으로 분할하고, 각각의 전문 에이전트(예: 리서처, 코더, 테스터)에게 비동기 위임합니다.</p>
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-title">orchestrator.json</span>
+                  <div class="code-actions">
+                    <span class="code-badge">JSON</span>
+                    <button class="btn-copy" type="button">복사</button>
+                  </div>
+                </div>
+                <pre class="code-pre"><code>{
+  "orchestrator": "LeadPlannerAgent",
+  "delegates": [
+    { "role": "code_search", "agent": "ResearchAgent", "mode": "read-only" },
+    { "role": "refactor", "agent": "CodingAgent", "mode": "sandbox-write" },
+    { "role": "verify", "agent": "TestRunnerAgent", "mode": "isolated-test" }
+  ]
+}</code></pre>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-reflection">
+              <p><strong>생성기-비평가(Generator-Critic) 패턴:</strong> 초안을 작성하는 에이전트와 보안/품질 기준에 따라 엄격하게 검증하는 비평 에이전트가 교차 피드백을 통해 결과물의 완성도를 극대화합니다.</p>
+              <div class="callout callout-tip">
+                <div class="callout-header">장점</div>
+                <div class="callout-content">취약점 탐지율이 비약적으로 증가하며 코드 환각(Hallucination)을 90% 이상 사전 차단할 수 있습니다.</div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-pipeline">
+              <p><strong>순차 파이프라인 패턴:</strong> 작업의 입출력이 명확할 때(분석 &rarr; 설계 &rarr; 구현 &rarr; 배포) 각 단계의 출력이 다음 에이전트의 입력으로 직접 전달되는 구조입니다.</p>
+            </div>
+          </div>
+
+          <h2 id="agent-state-machine">4. 상태 전이 및 에이전트 라이프사이클</h2>
+          <p>
+            시스템 안정성을 유지하기 위해 에이전트는 다음과 같은 표준 상태(Lifecycle State)를 전이합니다:
+          </p>
+
+          <div class="steps-container">
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">IDLE &rarr; READY</div>
+                <div class="step-description">사용자 요청 수신 후 시스템 프롬프트, 도구 스키마, 컨텍스트 주입 준비 완료 상태.</div>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">RUNNING (추론 & 도구 실행)</div>
+                <div class="step-description">LLM 호출 및 도구 실행을 반복하는 활성 루프 상태. 실시간 이벤트 스트리밍 발생.</div>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">WAITING_FOR_FEEDBACK / BLOCKED</div>
+                <div class="step-description">보안상 중요 작업(예: 프로덕션 배포, 파일 삭제) 전 사용자 승인을 기다리거나 외부 이벤트 대기.</div>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <div class="step-title">COMPLETED / TERMINATED</div>
+                <div class="step-description">목표 완수 후 산출물 정리, 워크스페이스 정리 및 최종 리포트 출력.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Page Navigation Footer -->
+        <footer class="page-nav-footer">
+          <a href="../index.html" class="page-nav-card">
+            <span class="page-nav-label">이전 문서</span>
+            <span class="page-nav-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>문서 홈</span>
+            </span>
+          </a>
+          <a href="prompt-engineering.html" class="page-nav-card next">
+            <span class="page-nav-label">다음 문서</span>
+            <span class="page-nav-title">
+              <span>프롬프트 엔지니어링</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </a>
+        </footer>
+
+      </article>
+    </main>
+
+    <!-- Table of Contents (Right) -->
+    <aside class="toc-sidebar">
+      <div class="toc-title">이 페이지의 목차</div>
+      <ul class="toc-list">
+        <li><a href="#core-loop" class="toc-link">1. 핵심 실행 루프</a></li>
+        <li><a href="#memory-layers" class="toc-link">2. 에이전트 메모리 계층</a></li>
+        <li><a href="#multi-agent-patterns" class="toc-link">3. 멀티 에이전트 패턴</a></li>
+        <li><a href="#agent-state-machine" class="toc-link">4. 상태 전이 라이프사이클</a></li>
+      </ul>
+    </aside>
+
+  </div>
+
+  <!-- Search Modal -->
+  <div class="search-modal-backdrop" id="search-modal-backdrop">
+    <div class="search-modal">
+      <div class="search-input-wrapper">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" class="search-modal-input" id="search-modal-input" placeholder="문서 검색..." autocomplete="off">
+        <kbd class="kbd-shortcut">ESC</kbd>
+      </div>
+      <ul class="search-results-list" id="search-results-list"></ul>
+      <div class="search-modal-footer">
+        <span><kbd class="kbd-shortcut">↵</kbd> 선택</span>
+        <span><kbd class="kbd-shortcut">ESC</kbd> 닫기</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>
