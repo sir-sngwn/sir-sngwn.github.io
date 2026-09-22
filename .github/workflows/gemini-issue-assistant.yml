@@ -5,6 +5,12 @@ on:
     types: [opened, edited]
   issue_comment:
     types: [created]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: '테스트할 이슈 번호'
+        required: true
+        type: number
 
 permissions:
   issues: write
@@ -13,13 +19,13 @@ permissions:
 jobs:
   analyze-issue:
     runs-on: ubuntu-latest
-    # 1. github-actions[bot] 및 외부 봇 계정의 재실행 방지 (무한 루프 차단)
-    # 2. 이슈 생성/수정이거나, 댓글에 '/gemini' 트리거 명령어가 포함된 경우에만 실행
+    # 봇 계정의 재실행 방지 (무한 루프 차단) 및 트리거 조건 검증
     if: |
       !endsWith(github.actor, '[bot]') &&
       github.actor != 'github-actions[bot]' &&
       (
         github.event_name == 'issues' ||
+        github.event_name == 'workflow_dispatch' ||
         (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/gemini'))
       )
     steps:
@@ -36,41 +42,63 @@ jobs:
               return;
             }
 
-            const isComment = context.eventName === 'issue_comment';
-            const issue = context.payload.issue;
-            const issueNumber = issue.number;
-            const issueTitle = issue.title;
-            const issueBody = issue.body || "(내용 없음)";
-            const issueAuthor = issue.user.login;
-            const actor = context.actor;
+            const eventName = context.eventName;
+            let issueNumber;
+            let issueTitle = "";
+            let issueBody = "";
+            let issueAuthor = "";
+            let actor = context.actor;
+            let commentBody = "";
 
-            // 추가 코멘트 트리거인 경우 해당 댓글 내용 추출
-            const commentBody = isComment ? (context.payload.comment.body || '') : '';
+            if (eventName === 'workflow_dispatch') {
+              issueNumber = context.payload.inputs.issue_number;
+              const issueData = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber
+              });
+              issueTitle = issueData.data.title;
+              issueBody = issueData.data.body || "(내용 없음)";
+              issueAuthor = issueData.data.user.login;
+            } else {
+              const issue = context.payload.issue;
+              issueNumber = issue.number;
+              issueTitle = issue.title;
+              issueBody = issue.body || "(내용 없음)";
+              issueAuthor = issue.user.login;
+              if (eventName === 'issue_comment') {
+                commentBody = context.payload.comment.body || '';
+              }
+            }
 
-            // 시니어 오픈소스 메인테이너 시스템 프롬프트 정의
-            const systemPrompt = `너는 이 저장소의 시니어 오픈소스 메인테이너이자 AI 어시스턴트다. 
-사용자가 등록하거나 문의한 이슈의 제목과 본문(버그 리포트, 기능 제안, 장애 문의 등)을 분석하여:
-1. 핵심 문제 원인 추론 (Analysis)
-2. 추천 해결 방안 및 코드 수정 힌트 (Solution & Code Hints)
-3. 재현 및 디버깅 체크리스트 (Debugging Checklist)
-를 친절하고 명확한 마크다운 형식의 한국어로 구조화하여 작성하라.`;
+            // 시니어 메인테이너 시스템 프롬프트
+            const systemPrompt = [
+              "너는 이 저장소의 시니어 오픈소스 메인테이너이자 AI 어시스턴트다.",
+              "사용자가 등록하거나 문의한 이슈의 제목과 본문(버그 리포트, 기능 제안, 장애 문의 등)을 분석하여:",
+              "1. 핵심 문제 원인 추론 (Analysis)",
+              "2. 추천 해결 방안 및 코드 수정 힌트 (Solution & Code Hints)",
+              "3. 재현 및 디버깅 체크리스트 (Debugging Checklist)",
+              "를 친절하고 명확한 마크다운 형식의 한국어로 구조화하여 작성하라."
+            ].join('\n');
 
-            // 사용자 입력 프롬프트 조립
-            let promptContent = `[이슈 정보]
-- 작성자: @${issueAuthor}
-- 이슈 번호: #${issueNumber}
-- 제목: ${issueTitle}
+            // 사용자 프롬프트 조립
+            const promptLines = [
+              "[이슈 정보]",
+              `- 작성자: @${issueAuthor}`,
+              `- 이슈 번호: #${issueNumber}`,
+              `- 제목: ${issueTitle}`,
+              "",
+              "[이슈 본문]",
+              issueBody
+            ];
 
-[이슈 본문]
-${issueBody}
-`;
-
-            if (isComment) {
-              promptContent += `\n[사용자 추가 댓글 (/gemini 트리거)]
-@${actor}님의 댓글:
-${commentBody}
-
-위 추가 문의 사항에 집중하여 필요한 가이드와 구체적인 조언을 제공해주세요.`;
+            if (eventName === 'issue_comment' && commentBody) {
+              promptLines.push("");
+              promptLines.push("[사용자 추가 댓글 (/gemini 트리거)]");
+              promptLines.push(`@${actor}님의 댓글:`);
+              promptLines.push(commentBody);
+              promptLines.push("");
+              promptLines.push("위 추가 문의 사항에 집중하여 필요한 가이드와 구체적인 조언을 제공해주세요.");
             }
 
             const requestPayload = {
@@ -80,7 +108,7 @@ ${commentBody}
               contents: [
                 {
                   role: "user",
-                  parts: [{ text: promptContent }]
+                  parts: [{ text: promptLines.join('\n') }]
                 }
               ],
               generationConfig: {
@@ -114,7 +142,7 @@ ${commentBody}
               throw new Error("Gemini API로부터 적절한 텍스트 응답을 수신하지 못했습니다.");
             }
 
-            // 최종 마크다운 댓글 조립
+            // 마크다운 응답 댓글 조립
             const formattedComment = [
               `🤖 **Gemini AI Issue Assistant**`,
               ``,
@@ -128,6 +156,7 @@ ${commentBody}
               `*💡 이 답변은 Google Gemini API(\`gemini-1.5-flash\`)에 의해 자동 생성되었습니다. 추가 분석이나 도움이 필요하시면 \`/gemini <문의 내용>\` 형태로 댓글을 남겨주세요.*`
             ].join('\n');
 
+            // 1. 이슈 댓글 등록
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -135,4 +164,16 @@ ${commentBody}
               body: formattedComment
             });
 
-            core.info(`이슈 #${issueNumber}에 Gemini 분석 댓글 등록 완료!`);
+            // 2. gemini-assisted 라벨 자동 부착 (가시적인 처리 상태 표시)
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                labels: ['gemini-assisted']
+              });
+            } catch (labelErr) {
+              core.info(`라벨 등록 스킵: ${labelErr.message}`);
+            }
+
+            core.info(`이슈 #${issueNumber}에 Gemini 분석 댓글 등록 및 라벨 부착 완료!`);
