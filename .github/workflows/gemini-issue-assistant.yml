@@ -130,14 +130,13 @@ jobs:
                 
                 core.info(`이용 가능한 Gemini 모델 목록: ${availableModels.join(', ')}`);
                 
-                // 최신 플래시 모델 우선 매칭
+                // 최신 플래시 모델 우선 매칭 (Google 추천: gemini-3.6-flash)
                 const flashCandidates = [
-                  'gemini-2.0-flash',
-                  'gemini-2.5-flash',
-                  'gemini-1.5-flash-latest',
-                  'gemini-1.5-flash-002',
-                  'gemini-1.5-flash',
-                  'gemini-1.5-pro'
+                  'gemini-3.6-flash',
+                  'gemini-3.7-flash',
+                  'gemini-3.8-flash',
+                  'gemini-flash-latest',
+                  'gemini-3.5-flash'
                 ];
                 for (const candidate of flashCandidates) {
                   if (availableModels.includes(candidate)) {
