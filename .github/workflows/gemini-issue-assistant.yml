@@ -10,7 +10,7 @@ on:
       issue_number:
         description: '테스트할 이슈 번호'
         required: true
-        type: number
+        type: string
 
 permissions:
   issues: write
@@ -51,7 +51,7 @@ jobs:
             let commentBody = "";
 
             if (eventName === 'workflow_dispatch') {
-              issueNumber = context.payload.inputs.issue_number;
+              issueNumber = parseInt(context.payload.inputs.issue_number, 10);
               const issueData = await github.rest.issues.get({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -118,9 +118,41 @@ jobs:
               }
             };
 
-            core.info(`Google Gemini API (gemini-1.5-flash) 호출 중... (이슈 #${issueNumber})`);
+            // 지원 가능한 모델 자동 탐색 및 매칭
+            let selectedModel = 'gemini-1.5-flash-latest';
+            try {
+              const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+              if (listRes.ok) {
+                const listData = await listRes.json();
+                const availableModels = (listData.models || [])
+                  .filter(m => m.supportedGenerationMethods && m.supportedGenerationMethods.includes('generateContent'))
+                  .map(m => m.name.replace('models/', ''));
+                
+                core.info(`이용 가능한 Gemini 모델 목록: ${availableModels.join(', ')}`);
+                
+                // 최신 플래시 모델 우선 매칭
+                const flashCandidates = [
+                  'gemini-2.0-flash',
+                  'gemini-2.5-flash',
+                  'gemini-1.5-flash-latest',
+                  'gemini-1.5-flash-002',
+                  'gemini-1.5-flash',
+                  'gemini-1.5-pro'
+                ];
+                for (const candidate of flashCandidates) {
+                  if (availableModels.includes(candidate)) {
+                    selectedModel = candidate;
+                    break;
+                  }
+                }
+              }
+            } catch (listErr) {
+              core.warning(`모델 목록 조회 실패 (기본값 사용): ${listErr.message}`);
+            }
 
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            core.info(`선택된 모델: ${selectedModel} (이슈 #${issueNumber})`);
+
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`;
 
             const response = await fetch(endpoint, {
               method: 'POST',
@@ -153,7 +185,7 @@ jobs:
               aiReply,
               ``,
               `---`,
-              `*💡 이 답변은 Google Gemini API(\`gemini-1.5-flash\`)에 의해 자동 생성되었습니다. 추가 분석이나 도움이 필요하시면 \`/gemini <문의 내용>\` 형태로 댓글을 남겨주세요.*`
+              `*💡 이 답변은 Google Gemini API(\`${selectedModel}\`)에 의해 자동 생성되었습니다. 추가 분석이나 도움이 필요하시면 \`/gemini <문의 내용>\` 형태로 댓글을 남겨주세요.*`
             ].join('\n');
 
             // 1. 이슈 댓글 등록
